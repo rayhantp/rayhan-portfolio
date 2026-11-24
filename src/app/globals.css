@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+:root,
+html[data-theme="paper"] {
+  --bg: #f5f4f0;
+  --surface: #eae8e1;
+  --surface-elevated: #efede6;
+  --ink: #141414;
+  --muted: #575550;
+  --hairline: #d6d3c9;
+  --accent: #b84a27;
+  --accent-soft: rgba(184, 74, 39, 0.09);
+  --header-bg: rgba(245, 244, 240, 0.86);
+}
+
+html[data-theme="darkroom"] {
+  --bg: #111110;
+  --surface: #1b1a18;
+  --surface-elevated: #23221f;
+  --ink: #f2efe9;
+  --muted: #9e9a90;
+  --hairline: #2b2a27;
+  --accent: #d46642;
+  --accent-soft: rgba(212, 102, 66, 0.14);
+  --header-bg: rgba(17, 17, 16, 0.86);
+}
+
+@theme inline {
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  transition:
+    background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Subtle uncoated paper grain texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #f5f4f0;
+}
+
+.hairline-border {
+  border-color: var(--hairline);
+  transition: border-color 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.surface-panel {
+  background-color: var(--surface);
+  transition:
+    background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.surface-elevated {
+  background-color: var(--surface-elevated);
+  transition:
+    background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link:hover::after,
+.editorial-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reduced motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
